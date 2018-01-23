@@ -7,8 +7,8 @@ Client/demandeur : 				- M. Benoît MARTIN
 Cahier des charges : 				- M. Victor JOZWICKI
 
 Développeurs :  				
-* M. Daniel 
-* M. Thomas
+* M. Daniel PAYET 
+* M. Thomas LEMAIRE
 * M. Victor JOZWICKI
 
 Version du 17/01/2018 : - Introduction du cahier des charges
