@@ -1,43 +1,59 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 
-namespace Projet.Net {
-    public class Base {
+namespace Projet.Net.model {
+    class Base {
 
         private static Base instance = new Base();
 
+        private List<Image> images = new List<Image>();
+        private List<Tag> tags = new List<Tag>();
+
+        private List<Tag> selectedTags = new List<Tag>();
+
         private Base() {}
 
-        public static Base getInstance() {
-            return instance;
+        // -----------------------------------------------
+
+        public void selectTag(Tag tag) {
+            if (!this.selectedTags.Contains(tag)) {
+                this.selectedTags.Add(tag);
+            }
         }
 
-        public void addNameTag(String name) {
-            // TODO
+        public void deselectTag(Tag tag) {
+            this.selectedTags.Remove(tag);
         }
 
-        public void addImage(Image img) {
-            // TODO
+        public List<Tag> getSelectedTags() {
+            return this.selectedTags;
         }
 
-        public void tagImage(int imageId) {
-            // TODO
+        public List<Image> imagesWithTags() {
+            List<Image> imagesWithTags = new List<Image>();
+            foreach (Image image in this.images) {
+                if (image.hasTags(this.selectedTags)) {
+                    imagesWithTags.Add(image);
+                }
+            }
+            return imagesWithTags;
         }
 
-        public void tagTag(int tag, String name) {
-            // TODO
-        }
+        public List<Tag> getNextTags() {
+            List<Tag> nextTags = new List<Tag>();
+            foreach(Image image in this.imagesWithTags()) {
+                foreach(Tag tag in image.getTags()) {
+                    if (!nextTags.Contains(tag)) {
+                        nextTags.Add(tag);
+                    }
+                }
+            }
 
-        public void removeTag(int tag) {
-            // TODO
-        }
+            foreach(Tag tag in this.selectedTags) {
+                nextTags.Remove(tag);
+            }
 
-        public void renameTagName(int tagName, String name) {
-            // TODO
-        }
-
-        public void photoWithTags(int[] tags) {
-            // TODO
+            return nextTags;
         }
 
      }
