@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Projet.Net.model {
     class Base {
@@ -12,6 +14,10 @@ namespace Projet.Net.model {
         private List<Tag> selectedTags = new List<Tag>();
 
         private Base() {}
+
+        public static Base getInstance() {
+            return Base.instance;
+        }
 
         // -----------------------------------------------
 
@@ -56,5 +62,17 @@ namespace Projet.Net.model {
             return nextTags;
         }
 
+        public void loadWorkspace() {
+            string contents = File.ReadAllText(@"test.txt");
+            dynamic json = JsonConvert.DeserializeObject(contents);
+
+            foreach (String tag in json.tags) {
+                Console.WriteLine(tag);
+            }
+
+        }
      }
+
+
+
 }
