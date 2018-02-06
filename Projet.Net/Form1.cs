@@ -9,20 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Projet.Net
-{
-    public partial class AppWindow : Form
-    {
-        public AppWindow()
-        {
-            InitializeComponent();
-            InitializeTags();
+namespace Projet.Net {
+    public partial class AppWindow: Form {
+        public AppWindow() {
+            InitializeComponent( );
+            InitializeTags( );
         }
 
         private void InitializeTags() {
-            foreach ( Tag tag in Base.getInstance( ).tags ) {
-                tags.Items.Add( tag.getName() );
-            }
+            updateTagsView( Base.getInstance( ).tags );
         }
 
         private void leftAppButton_Click( object sender, EventArgs e ) {
@@ -34,7 +29,33 @@ namespace Projet.Net
         }
 
         private void tagSearch_TextChanged( object sender, EventArgs e ) {
-            Console.WriteLine( tagSearch.Text );
+            if ( tagSearch.Text.Trim( ) != "" ) {
+                filtrerTags( tagSearch.Text );
+            } else {
+                updateTagsView( Base.getInstance( ).tags );
+            }
         }
+
+        private void tags_SelectedIndexChanged( object sender, EventArgs e ) {
+            tagSearch.Text = tags.SelectedItem.ToString( );
+        }
+
+
+        /**
+         * Fonctions utiles
+         */
+        private void updateTagsView( List<Tag> tagsItems ) {
+            tags.Items.Clear( );
+            foreach ( Tag tag in tagsItems ) {
+                tags.Items.Add( tag.getName( ).Trim());
+            }
+        }
+
+        private void filtrerTags( string expression ) {
+            List<Tag> listeTags = Base.getInstance( ).tags;
+            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).Contains( expression.Trim() ) ).ToList( );
+            updateTagsView( tagFiltrer );
+        }
+
     }
 }

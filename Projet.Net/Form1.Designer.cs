@@ -63,7 +63,6 @@
             this.tagSearch.Name = "tagSearch";
             this.tagSearch.Size = new System.Drawing.Size(180, 20);
             this.tagSearch.TabIndex = 2;
-            this.tagSearch.Text = "Rechercher un tag...";
             this.tagSearch.TextChanged += new System.EventHandler(this.tagSearch_TextChanged);
             // 
             // eraseTagSearch
@@ -79,11 +78,16 @@
             // tags
             // 
             this.tags.FormattingEnabled = true;
+            this.tags.Items.AddRange(new object[] {
+            "rfrrg",
+            "efefe",
+            "efef"});
             this.tags.Location = new System.Drawing.Point(12, 57);
             this.tags.Margin = new System.Windows.Forms.Padding(5);
             this.tags.Name = "tags";
             this.tags.Size = new System.Drawing.Size(214, 355);
             this.tags.TabIndex = 5;
+            this.tags.SelectedIndexChanged += new System.EventHandler(this.tags_SelectedIndexChanged);
             // 
             // AppWindow
             // 
@@ -96,7 +100,7 @@
             this.Controls.Add(this.tagSearch);
             this.Controls.Add(this.menuBar);
             this.Name = "AppWindow";
-            this.Text = "Sac à caca";
+            this.Text = "Photo Tagger";
             this.menuBar.ResumeLayout(false);
             this.menuBar.PerformLayout();
             this.ResumeLayout(false);
