@@ -21,6 +21,31 @@ namespace Projet.Net.model {
 
         // -----------------------------------------------
 
+        public bool tagExists(Tag tag) {
+            foreach (Tag existingTag in this.tags) {
+                if (existingTag.getName() == tag.getName()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void addTag(String name) {
+            foreach(Tag tag in this.tags) {
+                if (tag.getName() == name) {
+                    return;
+                }
+            }
+            this.tags.Add(new Tag(name));
+        }
+
+        public void replaceAnRemoveTag(Tag tag, Tag newTag) {
+            foreach (Image image in this.images) {
+                image.replaceTag(tag, newTag);
+            }
+            this.tags.Remove(tag);
+        }
+
         public void selectTag(Tag tag) {
             if (!this.selectedTags.Contains(tag)) {
                 this.selectedTags.Add(tag);
@@ -36,17 +61,23 @@ namespace Projet.Net.model {
         }
 
         public List<Image> imagesWithTags() {
-            List<Image> imagesWithTags = new List<Image>();
-            foreach (Image image in this.images) {
-                if (image.hasTags(this.selectedTags)) {
-                    imagesWithTags.Add(image);
+            if (this.images.Count != 0) {
+                List<Image> imagesWithTags = new List<Image>();
+                foreach (Image image in this.images) {
+                    if (image.hasTags(this.selectedTags)) {
+                        imagesWithTags.Add(image);
+                    }
                 }
+                return imagesWithTags;
             }
-            return imagesWithTags;
+            else {
+                return this.images;
+            }
         }
 
         public List<Tag> getNextTags() {
             List<Tag> nextTags = new List<Tag>();
+
             foreach(Image image in this.imagesWithTags()) {
                 foreach(Tag tag in image.getTags()) {
                     if (!nextTags.Contains(tag)) {
@@ -66,13 +97,18 @@ namespace Projet.Net.model {
             string contents = File.ReadAllText(@"test.txt");
             dynamic json = JsonConvert.DeserializeObject(contents);
 
-            foreach (String tag in json.tags) {
-                Console.WriteLine(tag);
+            if (json.tags != null) {
+                foreach (String tagName in json.tags) {
+                    this.addTag(tagName);
+                }
             }
+         }
 
+        public void refresh() {
+            
         }
+
+
      }
-
-
 
 }

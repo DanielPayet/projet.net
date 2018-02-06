@@ -13,5 +13,17 @@ namespace Projet.Net.model {
             this.name = name;
         }
 
+        public String getName() {
+            return this.name;
+        }
+
+        public String rename(String name) {
+            if (Base.getInstance().tagExists(new Tag(name))) {
+                Base.getInstance().remplaceAnRemoveTag(this, new Tag(name));
+            }
+            else {
+                this.name = name;
+            }
+        }
     }
 }

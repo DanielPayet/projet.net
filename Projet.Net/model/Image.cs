@@ -45,6 +45,13 @@ namespace Projet.Net.model {
             this.tags.Remove(tag);
         }
 
+        public void replaceTag(Tag tag, Tag newTag) {
+            if (this.tags.Contains(tag)) {
+                this.tag(newTag);
+                this.unTag(tag);
+            }
+        }
+
         public List<Tag> getTags() {
             return this.tags;
         }
