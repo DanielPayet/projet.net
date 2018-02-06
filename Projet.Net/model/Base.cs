@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Projet.Net.model {
     class Base {
 
-        public static String workspacePath = "/Users/Thomas/Desktop/workspace/";
+        public static String workspacePath = "C:\\Users\\danie\\ImageProjetWorkspace\\";
 
         private static Base instance = new Base();
 

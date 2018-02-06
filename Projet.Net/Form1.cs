@@ -14,10 +14,23 @@ namespace Projet.Net {
         public AppWindow() {
             InitializeComponent( );
             InitializeTags( );
+            InitializeImage( );
         }
 
         private void InitializeTags() {
             updateTagsView( Base.getInstance( ).tags );
+        }
+
+        private void InitializeImage() {
+            List<model.Image> images = Base.getInstance( ).imagesWithTags( );
+            images.ForEach( ( image ) => {
+                PictureBox pict = new PictureBox( );
+                pict.Image = System.Drawing.Image.FromFile( image.getPath( ) );
+                pict.SizeMode = PictureBoxSizeMode.Zoom;
+                pict.Width = 150;
+                pict.Height = 150;
+                this.MosaiqueImages.Controls.Add( pict );
+            } );
         }
 
         private void leftAppButton_Click( object sender, EventArgs e ) {
@@ -37,9 +50,8 @@ namespace Projet.Net {
         }
 
         private void tags_SelectedIndexChanged( object sender, EventArgs e ) {
-            tagSearch.Text = tags.SelectedItem.ToString( );
+            //tags.SelectedItem.ToString( );
         }
-
 
         /**
          * Fonctions utiles
@@ -47,15 +59,14 @@ namespace Projet.Net {
         private void updateTagsView( List<Tag> tagsItems ) {
             tags.Items.Clear( );
             foreach ( Tag tag in tagsItems ) {
-                tags.Items.Add( tag.getName( ).Trim());
+                tags.Items.Add( tag.getName( ).Trim( ) );
             }
         }
 
         private void filtrerTags( string expression ) {
             List<Tag> listeTags = Base.getInstance( ).tags;
-            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).Contains( expression.Trim() ) ).ToList( );
+            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).Contains( expression.Trim( ) ) ).ToList( );
             updateTagsView( tagFiltrer );
         }
-
     }
 }

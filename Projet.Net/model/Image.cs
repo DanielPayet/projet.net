@@ -35,7 +35,7 @@ namespace Projet.Net.model {
         }
 
         public String getPath() {
-            return this.path;
+            return Base.workspacePath + this.path;
         }
 
         public bool hasTag(Tag tag) {
