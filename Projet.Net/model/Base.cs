@@ -9,7 +9,7 @@ namespace Projet.Net.model {
         private static Base instance = new Base();
 
         private List<Image> images = new List<Image>();
-        private List<Tag> tags = new List<Tag>();
+        public List<Tag> tags = new List<Tag>();//TODO remmettre en privé
 
         private List<Tag> selectedTags = new List<Tag>();
 
@@ -96,7 +96,7 @@ namespace Projet.Net.model {
         public void loadWorkspace() {
             string contents = File.ReadAllText(@"test.txt");
             dynamic json = JsonConvert.DeserializeObject(contents);
-
+            
             if (json.tags != null) {
                 foreach (String tagName in json.tags) {
                     this.addTag(tagName);

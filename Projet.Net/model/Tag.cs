@@ -17,9 +17,9 @@ namespace Projet.Net.model {
             return this.name;
         }
 
-        public String rename(String name) {
+        public void rename(String name) {
             if (Base.getInstance().tagExists(new Tag(name))) {
-                Base.getInstance().remplaceAnRemoveTag(this, new Tag(name));
+                Base.getInstance().replaceAnRemoveTag(this, new Tag(name));
             }
             else {
                 this.name = name;
