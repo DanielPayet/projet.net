@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 namespace Projet.Net.model {
     class Base {
 
+        public static String workspacePath = "/Users/Thomas/Desktop/workspace/";
+
         private static Base instance = new Base();
 
         private List<Image> images = new List<Image>();
@@ -19,7 +21,7 @@ namespace Projet.Net.model {
             return Base.instance;
         }
 
-        // -----------------------------------------------
+        // Tag manipulation --------------------------------------------------------
 
         public bool tagExists(Tag tag) {
             foreach (Tag existingTag in this.tags) {
@@ -60,6 +62,26 @@ namespace Projet.Net.model {
             return this.selectedTags;
         }
 
+        public List<Tag> getNextTags() {
+            List<Tag> nextTags = new List<Tag>();
+
+            foreach (Image image in this.imagesWithTags()) {
+                foreach (Tag tag in image.getTags()) {
+                    if (!nextTags.Contains(tag)) {
+                        nextTags.Add(tag);
+                    }
+                }
+            }
+
+            foreach (Tag tag in this.selectedTags) {
+                nextTags.Remove(tag);
+            }
+
+            return nextTags;
+        }
+
+        // Image manipulation --------------------------------------------------------
+
         public List<Image> imagesWithTags() {
             if (this.images.Count != 0) {
                 List<Image> imagesWithTags = new List<Image>();
@@ -75,26 +97,23 @@ namespace Projet.Net.model {
             }
         }
 
-        public List<Tag> getNextTags() {
-            List<Tag> nextTags = new List<Tag>();
-
-            foreach(Image image in this.imagesWithTags()) {
-                foreach(Tag tag in image.getTags()) {
-                    if (!nextTags.Contains(tag)) {
-                        nextTags.Add(tag);
-                    }
+        private Image createImage(String path) {
+            foreach(Image image in this.images) {
+                if (image.getPath() == path) {
+                    return image;
                 }
             }
 
-            foreach(Tag tag in this.selectedTags) {
-                nextTags.Remove(tag);
-            }
+            Image newImage = new Image(this.images.Count + 1, path);
+            this.images.Add(newImage);
 
-            return nextTags;
+            return newImage;
         }
 
+        // Load and Save functions --------------------------------------------------------
+
         public void loadWorkspace() {
-            string contents = File.ReadAllText(@"test.txt");
+            string contents = File.ReadAllText(Base.workspacePath + "workspace.json");
             dynamic json = JsonConvert.DeserializeObject(contents);
             
             if (json.tags != null) {
@@ -102,13 +121,35 @@ namespace Projet.Net.model {
                     this.addTag(tagName);
                 }
             }
-         }
 
-        public void refresh() {
+            if (json.images != null) {
+                foreach (dynamic imageStruct in json.images) {
+                    if (imageStruct.path != null) {
+
+                        List<Tag> tags = new List<Tag>();
+                        if (imageStruct.tags != null) {
+                            List<String> tagNames = new List<String>();
+                            foreach (String tagName in imageStruct.tags) {
+                                if (!tagNames.Contains(tagName)) {
+                                    tagNames.Add(tagName);
+                                }
+                            }
+                            foreach (String tagName in tagNames) {
+                                this.addTag(tagName);
+                                tags.Add(new Tag(tagName));
+                            }
+                        }
+
+                        Image image = this.createImage((String)imageStruct.path);
+                        image.tag(tags);
+                    }
+                }
+            }
+        }
+
+        public void saveWorkspace() {
             
         }
 
-
-     }
-
+     } // End Base Class
 }

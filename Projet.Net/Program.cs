@@ -18,6 +18,7 @@ namespace Projet.Net
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AppWindow());
+
         }
     }
 }
