@@ -49,7 +49,7 @@ namespace Projet.Net.model {
         }
 
         public void selectTag(Tag tag) {
-            if (!this.selectedTags.Contains(tag)) {
+            if (!tag.inList(this.selectedTags)) {
                 this.selectedTags.Add(tag);
             }
         }
@@ -67,7 +67,8 @@ namespace Projet.Net.model {
 
             foreach (Image image in this.imagesWithTags()) {
                 foreach (Tag tag in image.getTags()) {
-                    if (!nextTags.Contains(tag)) {
+                    if (!tag.inList(nextTags)) {
+                        Console.Write("O");
                         nextTags.Add(tag);
                     }
                 }

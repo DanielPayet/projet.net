@@ -25,5 +25,18 @@ namespace Projet.Net.model {
                 this.name = name;
             }
         }
+
+        public bool equalTo(Tag tag) {
+            return this.getName() == tag.getName();
+        }
+
+        public bool inList(List<Tag> tags) {
+            foreach(Tag tag in tags) {
+                if (this.equalTo(tag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
