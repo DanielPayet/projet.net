@@ -25,7 +25,7 @@ namespace Projet.Net {
             List<model.Image> images = Base.getInstance( ).imagesWithTags( );
             images.ForEach( ( image ) => {
                 PictureBox pict = new PictureBox( );
-                pict.Image = System.Drawing.Image.FromFile( image.getPath( ) );
+                pict.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath( ) );
                 pict.SizeMode = PictureBoxSizeMode.Zoom;
                 pict.Width = 150;
                 pict.Height = 150;
@@ -65,7 +65,7 @@ namespace Projet.Net {
 
         private void filtrerTags( string expression ) {
             List<Tag> listeTags = Base.getInstance( ).getNextTags();
-            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).Contains( expression.Trim( ) ) ).ToList( );
+            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).ToLower().Contains( expression.Trim( ).ToLower() ) ).ToList( );
             updateTagsView( tagFiltrer );
         }
     }
