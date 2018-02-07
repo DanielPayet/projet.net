@@ -18,7 +18,7 @@ namespace Projet.Net {
         }
 
         private void InitializeTags() {
-            updateTagsView( Base.getInstance( ).tags );
+            updateTagsView( Base.getInstance( ).getNextTags() );
         }
 
         private void InitializeImage() {
@@ -45,7 +45,7 @@ namespace Projet.Net {
             if ( tagSearch.Text.Trim( ) != "" ) {
                 filtrerTags( tagSearch.Text );
             } else {
-                updateTagsView( Base.getInstance( ).tags );
+                updateTagsView( Base.getInstance( ).getNextTags() );
             }
         }
 
@@ -64,7 +64,7 @@ namespace Projet.Net {
         }
 
         private void filtrerTags( string expression ) {
-            List<Tag> listeTags = Base.getInstance( ).tags;
+            List<Tag> listeTags = Base.getInstance( ).getNextTags();
             List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).Contains( expression.Trim( ) ) ).ToList( );
             updateTagsView( tagFiltrer );
         }
