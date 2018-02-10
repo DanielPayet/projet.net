@@ -34,27 +34,66 @@ namespace Projet.Net
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.menuBar = new System.Windows.Forms.ToolStrip();
+            this.EditionDropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.ouvrirUnWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importerDesImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.leftApp = new System.Windows.Forms.ToolStripButton();
-            this.tagSearch = new System.Windows.Forms.TextBox();
-            this.eraseTagSearch = new System.Windows.Forms.Button();
+            this.flowLayoutLeft = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutGauche = new System.Windows.Forms.FlowLayoutPanel();
             this.tags = new System.Windows.Forms.ListBox();
+            this.flowLayoutSearchTags = new System.Windows.Forms.FlowLayoutPanel();
+            this.eraseTagSearch = new System.Windows.Forms.Button();
+            this.tagSearch = new System.Windows.Forms.TextBox();
             this.MosaiqueImages = new System.Windows.Forms.FlowLayoutPanel();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.flowLayoutGauche.SuspendLayout();
+            this.flowLayoutSearchTags.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuBar
             // 
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditionDropDown,
+            this.toolStripSeparator,
             this.leftApp});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(934, 25);
+            this.menuBar.Size = new System.Drawing.Size(875, 25);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "toolStrip1";
+            // 
+            // EditionDropDown
+            // 
+            this.EditionDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.EditionDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ouvrirUnWorkspaceToolStripMenuItem,
+            this.importerDesImagesToolStripMenuItem});
+            this.EditionDropDown.Image = ((System.Drawing.Image)(resources.GetObject("EditionDropDown.Image")));
+            this.EditionDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EditionDropDown.Name = "EditionDropDown";
+            this.EditionDropDown.Size = new System.Drawing.Size(57, 22);
+            this.EditionDropDown.Text = "Edition";
+            this.EditionDropDown.ToolTipText = "Edition";
+            // 
+            // ouvrirUnWorkspaceToolStripMenuItem
+            // 
+            this.ouvrirUnWorkspaceToolStripMenuItem.Name = "ouvrirUnWorkspaceToolStripMenuItem";
+            this.ouvrirUnWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.ouvrirUnWorkspaceToolStripMenuItem.Text = "Ouvrir un dossier de travail";
+            this.ouvrirUnWorkspaceToolStripMenuItem.ToolTipText = "Ouvrir un nouveau dossier de travail";
+            // 
+            // importerDesImagesToolStripMenuItem
+            // 
+            this.importerDesImagesToolStripMenuItem.Name = "importerDesImagesToolStripMenuItem";
+            this.importerDesImagesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.importerDesImagesToolStripMenuItem.Text = "Importer des images";
+            this.importerDesImagesToolStripMenuItem.ToolTipText = "Importer des images dans le dossier actuel";
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
             // 
             // leftApp
             // 
@@ -66,17 +105,47 @@ namespace Projet.Net
             this.leftApp.Text = "Quitter";
             this.leftApp.Click += new System.EventHandler(this.leftAppButton_Click);
             // 
-            // tagSearch
+            // flowLayoutLeft
             // 
-            this.tagSearch.Location = new System.Drawing.Point(12, 29);
-            this.tagSearch.Name = "tagSearch";
-            this.tagSearch.Size = new System.Drawing.Size(180, 20);
-            this.tagSearch.TabIndex = 2;
-            this.tagSearch.TextChanged += new System.EventHandler(this.tagSearch_TextChanged);
+            this.flowLayoutLeft.Dock = System.Windows.Forms.DockStyle.Right;
+            this.flowLayoutLeft.Location = new System.Drawing.Point(715, 25);
+            this.flowLayoutLeft.Name = "flowLayoutLeft";
+            this.flowLayoutLeft.Size = new System.Drawing.Size(160, 433);
+            this.flowLayoutLeft.TabIndex = 7;
+            this.flowLayoutLeft.WrapContents = false;
+            // 
+            // flowLayoutGauche
+            // 
+            this.flowLayoutGauche.Controls.Add(this.flowLayoutSearchTags);
+            this.flowLayoutGauche.Controls.Add(this.tags);
+            this.flowLayoutGauche.Dock = System.Windows.Forms.DockStyle.Left;
+            this.flowLayoutGauche.Location = new System.Drawing.Point(0, 25);
+            this.flowLayoutGauche.Name = "flowLayoutGauche";
+            this.flowLayoutGauche.Size = new System.Drawing.Size(200, 433);
+            this.flowLayoutGauche.TabIndex = 6;
+            // 
+            // tags
+            // 
+            this.tags.FormattingEnabled = true;
+            this.tags.Location = new System.Drawing.Point(5, 38);
+            this.tags.Margin = new System.Windows.Forms.Padding(5);
+            this.tags.Name = "tags";
+            this.tags.Size = new System.Drawing.Size(189, 381);
+            this.tags.TabIndex = 5;
+            this.tags.SelectedIndexChanged += new System.EventHandler(this.tags_SelectedIndexChanged);
+            // 
+            // flowLayoutSearchTags
+            // 
+            this.flowLayoutSearchTags.Controls.Add(this.tagSearch);
+            this.flowLayoutSearchTags.Controls.Add(this.eraseTagSearch);
+            this.flowLayoutSearchTags.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutSearchTags.Name = "flowLayoutSearchTags";
+            this.flowLayoutSearchTags.Size = new System.Drawing.Size(191, 27);
+            this.flowLayoutSearchTags.TabIndex = 0;
             // 
             // eraseTagSearch
             // 
-            this.eraseTagSearch.Location = new System.Drawing.Point(198, 28);
+            this.eraseTagSearch.Location = new System.Drawing.Point(156, 3);
             this.eraseTagSearch.Name = "eraseTagSearch";
             this.eraseTagSearch.Size = new System.Drawing.Size(28, 21);
             this.eraseTagSearch.TabIndex = 3;
@@ -84,55 +153,40 @@ namespace Projet.Net
             this.eraseTagSearch.UseVisualStyleBackColor = true;
             this.eraseTagSearch.Click += new System.EventHandler(this.eraseTagSearch_Click);
             // 
-            // tags
+            // tagSearch
             // 
-            this.tags.FormattingEnabled = true;
-            this.tags.Location = new System.Drawing.Point(12, 57);
-            this.tags.Margin = new System.Windows.Forms.Padding(5);
-            this.tags.Name = "tags";
-            this.tags.Size = new System.Drawing.Size(214, 355);
-            this.tags.TabIndex = 5;
-            this.tags.SelectedIndexChanged += new System.EventHandler(this.tags_SelectedIndexChanged);
+            this.tagSearch.Location = new System.Drawing.Point(3, 3);
+            this.tagSearch.Name = "tagSearch";
+            this.tagSearch.Size = new System.Drawing.Size(147, 20);
+            this.tagSearch.TabIndex = 2;
+            this.tagSearch.TextChanged += new System.EventHandler(this.tagSearch_TextChanged);
             // 
             // MosaiqueImages
             // 
-            this.MosaiqueImages.AutoScroll = true;
-            this.MosaiqueImages.Location = new System.Drawing.Point(234, 57);
+            this.MosaiqueImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MosaiqueImages.Location = new System.Drawing.Point(200, 25);
             this.MosaiqueImages.Name = "MosaiqueImages";
-            this.MosaiqueImages.Size = new System.Drawing.Size(517, 357);
+            this.MosaiqueImages.Size = new System.Drawing.Size(515, 433);
             this.MosaiqueImages.TabIndex = 6;
-            // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(757, 57);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(165, 145);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
             // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(934, 426);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(875, 458);
             this.Controls.Add(this.MosaiqueImages);
-            this.Controls.Add(this.tags);
-            this.Controls.Add(this.eraseTagSearch);
-            this.Controls.Add(this.tagSearch);
+            this.Controls.Add(this.flowLayoutGauche);
+            this.Controls.Add(this.flowLayoutLeft);
             this.Controls.Add(this.menuBar);
+            this.MinimumSize = new System.Drawing.Size(600, 0);
             this.Name = "AppWindow";
             this.Text = "Photo Tagger";
             this.menuBar.ResumeLayout(false);
             this.menuBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.flowLayoutGauche.ResumeLayout(false);
+            this.flowLayoutSearchTags.ResumeLayout(false);
+            this.flowLayoutSearchTags.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,12 +196,17 @@ namespace Projet.Net
 
         private System.Windows.Forms.ToolStrip menuBar;
         private System.Windows.Forms.ToolStripButton leftApp;
-        private System.Windows.Forms.TextBox tagSearch;
-        private System.Windows.Forms.Button eraseTagSearch;
-        private System.Windows.Forms.ListBox tags;
+        private ToolStripSeparator toolStripSeparator;
+        private ToolStripDropDownButton EditionDropDown;
+        private ToolStripMenuItem ouvrirUnWorkspaceToolStripMenuItem;
+        private ToolStripMenuItem importerDesImagesToolStripMenuItem;
+        private FlowLayoutPanel flowLayoutLeft;
+        private FlowLayoutPanel flowLayoutGauche;
+        private FlowLayoutPanel flowLayoutSearchTags;
+        private TextBox tagSearch;
+        private Button eraseTagSearch;
+        private ListBox tags;
         private FlowLayoutPanel MosaiqueImages;
-        private System.IO.FileSystemWatcher fileSystemWatcher1;
-        private PictureBox pictureBox1;
     }
 }
 

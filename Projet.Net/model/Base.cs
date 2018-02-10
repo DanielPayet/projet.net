@@ -11,7 +11,7 @@ namespace Projet.Net.model {
         private static Base instance = new Base();
 
         private List<Image> images = new List<Image>();
-        public List<Tag> tags = new List<Tag>();//TODO remmettre en privé
+        private List<Tag> tags = new List<Tag>();
 
         private List<Tag> selectedTags = new List<Tag>();
 

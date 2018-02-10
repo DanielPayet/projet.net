@@ -50,7 +50,7 @@ namespace Projet.Net {
         }
 
         private void tags_SelectedIndexChanged( object sender, EventArgs e ) {
-            //tags.SelectedItem.ToString( );
+            
         }
 
         /**
