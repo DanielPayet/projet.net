@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,11 @@ namespace Projet.Net {
         }
 
         private void InitializeTags() {
-            updateTagsView( Base.getInstance( ).getNextTags() );
+            updateTagsView( Base.getInstance( ).getNextTags( ) );
         }
 
         private void InitializeImage() {
+            this.MosaiqueImages.Controls.Clear( );
             List<model.Image> images = Base.getInstance( ).imagesWithTags( );
             images.ForEach( ( image ) => {
                 PictureBox pict = new PictureBox( );
@@ -45,12 +47,12 @@ namespace Projet.Net {
             if ( tagSearch.Text.Trim( ) != "" ) {
                 filtrerTags( tagSearch.Text );
             } else {
-                updateTagsView( Base.getInstance( ).getNextTags() );
+                updateTagsView( Base.getInstance( ).getNextTags( ) );
             }
         }
 
         private void tags_SelectedIndexChanged( object sender, EventArgs e ) {
-            
+
         }
 
         /**
@@ -64,9 +66,22 @@ namespace Projet.Net {
         }
 
         private void filtrerTags( string expression ) {
-            List<Tag> listeTags = Base.getInstance( ).getNextTags();
-            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).ToLower().Contains( expression.Trim( ).ToLower() ) ).ToList( );
+            List<Tag> listeTags = Base.getInstance( ).getNextTags( );
+            List<Tag> tagFiltrer = listeTags.Where( tag => tag.getName( ).ToLower( ).Contains( expression.Trim( ).ToLower( ) ) ).ToList( );
             updateTagsView( tagFiltrer );
+        }
+
+        private void importerDesImagesToolStripMenuItem_Click( object sender, EventArgs e ) {
+            DialogResult result = importerImageDialog.ShowDialog( );
+            if ( result == DialogResult.OK ) {
+                string[] files = importerImageDialog.FileNames;
+                try {
+                    Base.getInstance( ).importImage( files );
+                    this.InitializeImage( );
+                } catch ( IOException error ) {
+                    Console.WriteLine( error );
+                }
+            }
         }
     }
 }

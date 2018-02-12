@@ -41,11 +41,12 @@ namespace Projet.Net
             this.leftApp = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutGauche = new System.Windows.Forms.FlowLayoutPanel();
-            this.tags = new System.Windows.Forms.ListBox();
             this.flowLayoutSearchTags = new System.Windows.Forms.FlowLayoutPanel();
-            this.eraseTagSearch = new System.Windows.Forms.Button();
             this.tagSearch = new System.Windows.Forms.TextBox();
+            this.eraseTagSearch = new System.Windows.Forms.Button();
+            this.tags = new System.Windows.Forms.ListBox();
             this.MosaiqueImages = new System.Windows.Forms.FlowLayoutPanel();
+            this.importerImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuBar.SuspendLayout();
             this.flowLayoutGauche.SuspendLayout();
             this.flowLayoutSearchTags.SuspendLayout();
@@ -89,6 +90,7 @@ namespace Projet.Net
             this.importerDesImagesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.importerDesImagesToolStripMenuItem.Text = "Importer des images";
             this.importerDesImagesToolStripMenuItem.ToolTipText = "Importer des images dans le dossier actuel";
+            this.importerDesImagesToolStripMenuItem.Click += new System.EventHandler(this.importerDesImagesToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 
@@ -124,16 +126,6 @@ namespace Projet.Net
             this.flowLayoutGauche.Size = new System.Drawing.Size(200, 433);
             this.flowLayoutGauche.TabIndex = 6;
             // 
-            // tags
-            // 
-            this.tags.FormattingEnabled = true;
-            this.tags.Location = new System.Drawing.Point(5, 38);
-            this.tags.Margin = new System.Windows.Forms.Padding(5);
-            this.tags.Name = "tags";
-            this.tags.Size = new System.Drawing.Size(189, 381);
-            this.tags.TabIndex = 5;
-            this.tags.SelectedIndexChanged += new System.EventHandler(this.tags_SelectedIndexChanged);
-            // 
             // flowLayoutSearchTags
             // 
             this.flowLayoutSearchTags.Controls.Add(this.tagSearch);
@@ -142,6 +134,14 @@ namespace Projet.Net
             this.flowLayoutSearchTags.Name = "flowLayoutSearchTags";
             this.flowLayoutSearchTags.Size = new System.Drawing.Size(191, 27);
             this.flowLayoutSearchTags.TabIndex = 0;
+            // 
+            // tagSearch
+            // 
+            this.tagSearch.Location = new System.Drawing.Point(3, 3);
+            this.tagSearch.Name = "tagSearch";
+            this.tagSearch.Size = new System.Drawing.Size(147, 20);
+            this.tagSearch.TabIndex = 2;
+            this.tagSearch.TextChanged += new System.EventHandler(this.tagSearch_TextChanged);
             // 
             // eraseTagSearch
             // 
@@ -153,13 +153,15 @@ namespace Projet.Net
             this.eraseTagSearch.UseVisualStyleBackColor = true;
             this.eraseTagSearch.Click += new System.EventHandler(this.eraseTagSearch_Click);
             // 
-            // tagSearch
+            // tags
             // 
-            this.tagSearch.Location = new System.Drawing.Point(3, 3);
-            this.tagSearch.Name = "tagSearch";
-            this.tagSearch.Size = new System.Drawing.Size(147, 20);
-            this.tagSearch.TabIndex = 2;
-            this.tagSearch.TextChanged += new System.EventHandler(this.tagSearch_TextChanged);
+            this.tags.FormattingEnabled = true;
+            this.tags.Location = new System.Drawing.Point(5, 38);
+            this.tags.Margin = new System.Windows.Forms.Padding(5);
+            this.tags.Name = "tags";
+            this.tags.Size = new System.Drawing.Size(189, 381);
+            this.tags.TabIndex = 5;
+            this.tags.SelectedIndexChanged += new System.EventHandler(this.tags_SelectedIndexChanged);
             // 
             // MosaiqueImages
             // 
@@ -168,6 +170,13 @@ namespace Projet.Net
             this.MosaiqueImages.Name = "MosaiqueImages";
             this.MosaiqueImages.Size = new System.Drawing.Size(515, 433);
             this.MosaiqueImages.TabIndex = 6;
+            // 
+            // importerImageDialog
+            // 
+            this.importerImageDialog.FileName = "importerImageDialog";
+            this.importerImageDialog.Filter = "Images (*.jpg)|*.jpg";
+            this.importerImageDialog.Multiselect = true;
+            this.importerImageDialog.Title = "Sélection des fichiers à copier dans le workspace";
             // 
             // AppWindow
             // 
@@ -179,7 +188,7 @@ namespace Projet.Net
             this.Controls.Add(this.flowLayoutGauche);
             this.Controls.Add(this.flowLayoutLeft);
             this.Controls.Add(this.menuBar);
-            this.MinimumSize = new System.Drawing.Size(600, 0);
+            this.MinimumSize = new System.Drawing.Size(600, 39);
             this.Name = "AppWindow";
             this.Text = "Photo Tagger";
             this.menuBar.ResumeLayout(false);
@@ -207,6 +216,7 @@ namespace Projet.Net
         private Button eraseTagSearch;
         private ListBox tags;
         private FlowLayoutPanel MosaiqueImages;
+        private OpenFileDialog importerImageDialog;
     }
 }
 

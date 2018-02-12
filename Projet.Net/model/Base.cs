@@ -8,14 +8,14 @@ namespace Projet.Net.model {
 
         public static String workspacePath = "C:\\Users\\danie\\ImageProjetWorkspace\\";
 
-        private static Base instance = new Base();
+        private static Base instance = new Base( );
 
-        private List<Image> images = new List<Image>();
-        private List<Tag> tags = new List<Tag>();
+        private List<Image> images = new List<Image>( );
+        private List<Tag> tags = new List<Tag>( );
 
-        private List<Tag> selectedTags = new List<Tag>();
+        private List<Tag> selectedTags = new List<Tag>( );
 
-        private Base() {}
+        private Base() { }
 
         public static Base getInstance() {
             return Base.instance;
@@ -23,39 +23,39 @@ namespace Projet.Net.model {
 
         // Tag manipulation --------------------------------------------------------
 
-        public bool tagExists(Tag tag) {
-            foreach (Tag existingTag in this.tags) {
-                if (existingTag.getName() == tag.getName()) {
+        public bool tagExists( Tag tag ) {
+            foreach ( Tag existingTag in this.tags ) {
+                if ( existingTag.getName( ) == tag.getName( ) ) {
                     return true;
                 }
             }
             return false;
         }
 
-        public void addTag(String name) {
-            foreach(Tag tag in this.tags) {
-                if (tag.getName() == name) {
+        public void addTag( String name ) {
+            foreach ( Tag tag in this.tags ) {
+                if ( tag.getName( ) == name ) {
                     return;
                 }
             }
-            this.tags.Add(new Tag(name));
+            this.tags.Add( new Tag( name ) );
         }
 
-        public void replaceAnRemoveTag(Tag tag, Tag newTag) {
-            foreach (Image image in this.images) {
-                image.replaceTag(tag, newTag);
+        public void replaceAnRemoveTag( Tag tag, Tag newTag ) {
+            foreach ( Image image in this.images ) {
+                image.replaceTag( tag, newTag );
             }
-            this.tags.Remove(tag);
+            this.tags.Remove( tag );
         }
 
-        public void selectTag(Tag tag) {
-            if (!tag.inList(this.selectedTags)) {
-                this.selectedTags.Add(tag);
+        public void selectTag( Tag tag ) {
+            if ( !tag.inList( this.selectedTags ) ) {
+                this.selectedTags.Add( tag );
             }
         }
 
-        public void deselectTag(Tag tag) {
-            this.selectedTags.Remove(tag);
+        public void deselectTag( Tag tag ) {
+            this.selectedTags.Remove( tag );
         }
 
         public List<Tag> getSelectedTags() {
@@ -63,19 +63,18 @@ namespace Projet.Net.model {
         }
 
         public List<Tag> getNextTags() {
-            List<Tag> nextTags = new List<Tag>();
+            List<Tag> nextTags = new List<Tag>( );
 
-            foreach (Image image in this.imagesWithTags()) {
-                foreach (Tag tag in image.getTags()) {
-                    if (!tag.inList(nextTags)) {
-                        Console.Write("O");
-                        nextTags.Add(tag);
+            foreach ( Image image in this.imagesWithTags( ) ) {
+                foreach ( Tag tag in image.getTags( ) ) {
+                    if ( !tag.inList( nextTags ) ) {
+                        nextTags.Add( tag );
                     }
                 }
             }
 
-            foreach (Tag tag in this.selectedTags) {
-                nextTags.Remove(tag);
+            foreach ( Tag tag in this.selectedTags ) {
+                nextTags.Remove( tag );
             }
 
             return nextTags;
@@ -84,73 +83,116 @@ namespace Projet.Net.model {
         // Image manipulation --------------------------------------------------------
 
         public List<Image> imagesWithTags() {
-            if (this.images.Count != 0) {
-                List<Image> imagesWithTags = new List<Image>();
-                foreach (Image image in this.images) {
-                    if (image.hasTags(this.selectedTags)) {
-                        imagesWithTags.Add(image);
+            if ( this.images.Count != 0 ) {
+                List<Image> imagesWithTags = new List<Image>( );
+                foreach ( Image image in this.images ) {
+                    if ( image.hasTags( this.selectedTags ) ) {
+                        imagesWithTags.Add( image );
                     }
                 }
                 return imagesWithTags;
-            }
-            else {
+            } else {
                 return this.images;
             }
         }
 
-        private Image createImage(String path) {
-            foreach(Image image in this.images) {
-                if (image.getPath() == path) {
+        private Image createImage( String path ) {
+            foreach ( Image image in this.images ) {
+                if ( image.getPath( ) == path ) {
                     return image;
                 }
             }
 
-            Image newImage = new Image(this.images.Count + 1, path);
-            this.images.Add(newImage);
+            Image newImage = new Image( this.images.Count + 1, path );
+            this.images.Add( newImage );
 
             return newImage;
         }
 
+        public void importImage( string[] imagesFullFilePath ) {
+            foreach ( string imageFullFilePath in imagesFullFilePath ) {
+                string imageName = this.generateImageName( imageFullFilePath );
+                if ( !workspacePath.Equals( Path.GetDirectoryName( imageFullFilePath ) + Path.DirectorySeparatorChar ) ) {
+                    this.copieImageToWorkspace( imageFullFilePath, imageName );
+                }
+                Image image = this.createImage( imageName );
+                //image.tag( readTag( nouvellesImages ) ); TODO
+            }
+            this.saveImagesToWorkSpace();
+        }
         // Load and Save functions --------------------------------------------------------
 
         public void loadWorkspace() {
-            string contents = File.ReadAllText(Base.workspacePath + "workspace.json");
-            dynamic json = JsonConvert.DeserializeObject(contents);
-            
-            if (json.tags != null) {
-                foreach (String tagName in json.tags) {
-                    this.addTag(tagName);
+            string contents = File.ReadAllText( Base.workspacePath + "workspace.json" );
+            dynamic json = JsonConvert.DeserializeObject( contents );
+
+            if ( json.tags != null ) {
+                foreach ( String tagName in json.tags ) {
+                    this.addTag( tagName );
                 }
             }
 
-            if (json.images != null) {
-                foreach (dynamic imageStruct in json.images) {
-                    if (imageStruct.path != null) {
+            if ( json.images != null ) {
+                foreach ( dynamic imageStruct in json.images ) {
+                    if ( imageStruct.path != null ) {
 
-                        List<Tag> tags = new List<Tag>();
-                        if (imageStruct.tags != null) {
-                            List<String> tagNames = new List<String>();
-                            foreach (String tagName in imageStruct.tags) {
-                                if (!tagNames.Contains(tagName)) {
-                                    tagNames.Add(tagName);
+                        List<Tag> tags = new List<Tag>( );
+                        if ( imageStruct.tags != null ) {
+                            List<String> tagNames = new List<String>( );
+                            foreach ( String tagName in imageStruct.tags ) {
+                                if ( !tagNames.Contains( tagName ) ) {
+                                    tagNames.Add( tagName );
                                 }
                             }
-                            foreach (String tagName in tagNames) {
-                                this.addTag(tagName);
-                                tags.Add(new Tag(tagName));
+                            foreach ( String tagName in tagNames ) {
+                                this.addTag( tagName );
+                                tags.Add( new Tag( tagName ) );
                             }
                         }
 
-                        Image image = this.createImage((String)imageStruct.path);
-                        image.tag(tags);
+                        Image image = this.createImage( ( String )imageStruct.path );
+                        image.tag( tags );
                     }
                 }
             }
         }
 
         public void saveWorkspace() {
-            
+
         }
 
-     } // End Base Class
+        private void copieImageToWorkspace( string path, string newName ) {
+            File.Copy( path, workspacePath + newName );
+        }
+
+        private string generateImageName( string path ) {
+            return Path.GetFileNameWithoutExtension( path ) + "_" + DateTime.UtcNow.ToBinary( ) + Path.GetExtension( path );
+        }
+
+        private void saveImagesToWorkSpace( ) {
+            string tempJson = "[";
+
+            foreach ( Image image in this.images ) {
+                tempJson += "{ 'path' : '" + image.getPath( ) + "'," +
+                              "'tag' : []},";
+            }
+            tempJson = tempJson.Substring( 0, tempJson.Length-1 );
+
+            tempJson += "]";
+
+            string contents = File.ReadAllText( Base.workspacePath + "workspace.json" );
+            dynamic json = JsonConvert.DeserializeObject( contents );
+            json.images = JsonConvert.DeserializeObject( tempJson );
+            TextWriter writer = null;
+            try {
+                dynamic contentsToWriteToFile = JsonConvert.SerializeObject( json );
+                writer = new StreamWriter( workspacePath + "workspace.json", false );
+                writer.Write( contentsToWriteToFile );
+            } finally {
+                if ( writer != null )
+                    writer.Close( );
+            }
+        }
+
+    } // End Base Class
 }
