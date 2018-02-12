@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ using System.Windows.Forms;
 
 namespace Projet.Net {
     public partial class AppWindow: Form {
+        private string imageClicked = null;
+
         public AppWindow() {
             InitializeComponent( );
             InitializeTags( );
@@ -28,11 +31,21 @@ namespace Projet.Net {
             images.ForEach( ( image ) => {
                 PictureBox pict = new PictureBox( );
                 pict.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath( ) );
+                pict.ImageLocation = Base.workspacePath + image.getPath( );
                 pict.SizeMode = PictureBoxSizeMode.Zoom;
                 pict.Width = 150;
                 pict.Height = 150;
+                pict.Click += Pict_Click;
                 this.MosaiqueImages.Controls.Add( pict );
             } );
+        }
+
+        private void Pict_Click(object sender, EventArgs e ) {
+            PictureBox image = sender as PictureBox;
+            if ( image != null ) {
+                this.imageClicked = image.ImageLocation;
+                menuClickDroit.Show( Cursor.Position );
+            }
         }
 
         private void leftAppButton_Click( object sender, EventArgs e ) {
@@ -82,6 +95,14 @@ namespace Projet.Net {
                     Console.WriteLine( error );
                 }
             }
+        }
+
+        private void ouvrirDansLexplorateurToolStripMenuItem_Click( object sender, EventArgs e ) {
+            Process.Start( this.imageClicked );
+        }
+
+        private void ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem_Click( object sender, EventArgs e ) {
+            Process.Start( Base.workspacePath );
         }
     }
 }

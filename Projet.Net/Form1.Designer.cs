@@ -32,6 +32,7 @@ namespace Projet.Net
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.menuBar = new System.Windows.Forms.ToolStrip();
             this.EditionDropDown = new System.Windows.Forms.ToolStripDropDownButton();
@@ -47,9 +48,14 @@ namespace Projet.Net
             this.tags = new System.Windows.Forms.ListBox();
             this.MosaiqueImages = new System.Windows.Forms.FlowLayoutPanel();
             this.importerImageDialog = new System.Windows.Forms.OpenFileDialog();
+            this.menuClickDroit = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ouvrirDansLexplorateurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuBar.SuspendLayout();
             this.flowLayoutGauche.SuspendLayout();
             this.flowLayoutSearchTags.SuspendLayout();
+            this.menuClickDroit.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuBar
@@ -68,8 +74,10 @@ namespace Projet.Net
             // 
             this.EditionDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.EditionDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ouvrirUnWorkspaceToolStripMenuItem,
-            this.importerDesImagesToolStripMenuItem});
+            this.importerDesImagesToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem,
+            this.ouvrirUnWorkspaceToolStripMenuItem});
             this.EditionDropDown.Image = ((System.Drawing.Image)(resources.GetObject("EditionDropDown.Image")));
             this.EditionDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.EditionDropDown.Name = "EditionDropDown";
@@ -80,14 +88,14 @@ namespace Projet.Net
             // ouvrirUnWorkspaceToolStripMenuItem
             // 
             this.ouvrirUnWorkspaceToolStripMenuItem.Name = "ouvrirUnWorkspaceToolStripMenuItem";
-            this.ouvrirUnWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.ouvrirUnWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
             this.ouvrirUnWorkspaceToolStripMenuItem.Text = "Ouvrir un dossier de travail";
             this.ouvrirUnWorkspaceToolStripMenuItem.ToolTipText = "Ouvrir un nouveau dossier de travail";
             // 
             // importerDesImagesToolStripMenuItem
             // 
             this.importerDesImagesToolStripMenuItem.Name = "importerDesImagesToolStripMenuItem";
-            this.importerDesImagesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.importerDesImagesToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
             this.importerDesImagesToolStripMenuItem.Text = "Importer des images";
             this.importerDesImagesToolStripMenuItem.ToolTipText = "Importer des images dans le dossier actuel";
             this.importerDesImagesToolStripMenuItem.Click += new System.EventHandler(this.importerDesImagesToolStripMenuItem_Click);
@@ -178,6 +186,32 @@ namespace Projet.Net
             this.importerImageDialog.Multiselect = true;
             this.importerImageDialog.Title = "Sélection des fichiers à copier dans le workspace";
             // 
+            // menuClickDroit
+            // 
+            this.menuClickDroit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ouvrirDansLexplorateurToolStripMenuItem});
+            this.menuClickDroit.Name = "menuClickDroit";
+            this.menuClickDroit.Size = new System.Drawing.Size(280, 26);
+            // 
+            // ouvrirDansLexplorateurToolStripMenuItem
+            // 
+            this.ouvrirDansLexplorateurToolStripMenuItem.Name = "ouvrirDansLexplorateurToolStripMenuItem";
+            this.ouvrirDansLexplorateurToolStripMenuItem.Size = new System.Drawing.Size(279, 22);
+            this.ouvrirDansLexplorateurToolStripMenuItem.Text = "Ouvrir dans votre visualisateur d\'image";
+            this.ouvrirDansLexplorateurToolStripMenuItem.Click += new System.EventHandler(this.ouvrirDansLexplorateurToolStripMenuItem_Click);
+            // 
+            // ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem
+            // 
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Name = "ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem";
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Text = "Ouvrir le dossier de travail dans l\'explorateur Windows";
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Click += new System.EventHandler(this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(355, 6);
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,6 +230,7 @@ namespace Projet.Net
             this.flowLayoutGauche.ResumeLayout(false);
             this.flowLayoutSearchTags.ResumeLayout(false);
             this.flowLayoutSearchTags.PerformLayout();
+            this.menuClickDroit.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,6 +252,10 @@ namespace Projet.Net
         private ListBox tags;
         private FlowLayoutPanel MosaiqueImages;
         private OpenFileDialog importerImageDialog;
+        private ContextMenuStrip menuClickDroit;
+        private ToolStripMenuItem ouvrirDansLexplorateurToolStripMenuItem;
+        private ToolStripMenuItem ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }
 
