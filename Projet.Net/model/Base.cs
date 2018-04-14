@@ -118,42 +118,75 @@ namespace Projet.Net.model {
                 Image image = this.createImage( imageName );
                 //image.tag( readTag( nouvellesImages ) ); TODO
             }
-            this.saveImagesToWorkSpace();
+            this.saveImagesToWorkSpace( );
         }
         // Load and Save functions --------------------------------------------------------
 
-        public void loadWorkspace() {
-            string contents = File.ReadAllText( Base.workspacePath + "workspace.json" );
-            dynamic json = JsonConvert.DeserializeObject( contents );
+        private void initWorkspaceDir() {
+            String appName = "noNameApp";
 
-            if ( json.tags != null ) {
-                foreach ( String tagName in json.tags ) {
-                    this.addTag( tagName );
+            // Gives the path of the Documents folder on the computer
+            Base.workspacePath = System.Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ) + "\\" + appName + "\\";
+
+            // I guess we could create the folder if it's not there on loading the appWindow ?
+            Directory.CreateDirectory( Base.workspacePath );
+            // Then create the non existing .json
+
+            if ( !File.Exists( Base.workspacePath + "workspace.json" ) ) {
+                File.Create( Base.workspacePath + "workspace.json" ).Close( );
+                String defaultWorkspace = "{'tags':[],'images':[] }";
+                TextWriter writer = null;
+                try {
+                    dynamic json = JsonConvert.DeserializeObject( defaultWorkspace );
+                    dynamic contentsToWriteToFile = JsonConvert.SerializeObject( json, Formatting.Indented );
+                    writer = new StreamWriter( Base.workspacePath + "workspace.json", false );
+                    writer.Write( contentsToWriteToFile );
+                } catch ( Exception e ) {
+                    Console.WriteLine( "Erreur d'écriture dans le workspace" + e.Message );
+                } finally {
+                    if ( writer != null )
+                        writer.Close( );
                 }
             }
+        }
 
-            if ( json.images != null ) {
-                foreach ( dynamic imageStruct in json.images ) {
-                    if ( imageStruct.path != null ) {
+        public void loadWorkspace() {
+            this.initWorkspaceDir( );
+            try {
+                string contents = File.ReadAllText( Base.workspacePath + "workspace.json" );
+                dynamic json = JsonConvert.DeserializeObject( contents );
 
-                        List<Tag> tags = new List<Tag>( );
-                        if ( imageStruct.tags != null ) {
-                            List<String> tagNames = new List<String>( );
-                            foreach ( String tagName in imageStruct.tags ) {
-                                if ( !tagNames.Contains( tagName ) ) {
-                                    tagNames.Add( tagName );
-                                }
-                            }
-                            foreach ( String tagName in tagNames ) {
-                                this.addTag( tagName );
-                                tags.Add( new Tag( tagName ) );
-                            }
-                        }
-
-                        Image image = this.createImage( ( String )imageStruct.path );
-                        image.tag( tags );
+                if ( json.tags != null ) {
+                    foreach ( String tagName in json.tags ) {
+                        this.addTag( tagName );
                     }
                 }
+
+                if ( json.images != null ) {
+                    foreach ( dynamic imageStruct in json.images ) {
+                        if ( imageStruct.path != null ) {
+
+                            List<Tag> tags = new List<Tag>( );
+                            if ( imageStruct.tags != null ) {
+                                List<String> tagNames = new List<String>( );
+                                foreach ( String tagName in imageStruct.tags ) {
+                                    if ( !tagNames.Contains( tagName ) ) {
+                                        tagNames.Add( tagName );
+                                    }
+                                }
+                                foreach ( String tagName in tagNames ) {
+                                    this.addTag( tagName );
+                                    tags.Add( new Tag( tagName ) );
+                                }
+                            }
+
+                            Image image = this.createImage( ( String )imageStruct.path );
+                            image.tag( tags );
+                        }
+                    }
+                }
+            } catch ( Exception e ) {
+                Console.WriteLine( e.Message );
             }
         }
 
@@ -169,14 +202,14 @@ namespace Projet.Net.model {
             return Path.GetFileNameWithoutExtension( path ) + "_" + DateTime.UtcNow.ToBinary( ) + Path.GetExtension( path );
         }
 
-        private void saveImagesToWorkSpace( ) {
+        private void saveImagesToWorkSpace() {
             string tempJson = "[";
 
             foreach ( Image image in this.images ) {
                 tempJson += "{ 'path' : '" + image.getPath( ) + "'," +
                               "'tag' : []},";
             }
-            tempJson = tempJson.Substring( 0, tempJson.Length-1 );
+            tempJson = tempJson.Substring( 0, tempJson.Length - 1 );
 
             tempJson += "]";
 
@@ -185,7 +218,7 @@ namespace Projet.Net.model {
             json.images = JsonConvert.DeserializeObject( tempJson );
             TextWriter writer = null;
             try {
-                dynamic contentsToWriteToFile = JsonConvert.SerializeObject( json );
+                dynamic contentsToWriteToFile = JsonConvert.SerializeObject( json, Formatting.Indented );
                 writer = new StreamWriter( workspacePath + "workspace.json", false );
                 writer.Write( contentsToWriteToFile );
             } finally {
