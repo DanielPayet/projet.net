@@ -1,14 +1,10 @@
 ﻿using Projet.Net.model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projet.Net {
@@ -22,7 +18,7 @@ namespace Projet.Net {
         }
 
         private void InitializeTags() {
-            updateTagsView( Base.getInstance( ).getNextTags( ) );
+            updateTagsView( );
         }
 
         private void InitializeImage() {
@@ -38,14 +34,20 @@ namespace Projet.Net {
                     pict.Height = 150;
                     pict.Click += Pict_Click;
                     this.MosaiqueImages.Controls.Add( pict );
-                } catch (Exception e ) {
+                } catch ( Exception e ) {
                     Console.Error.WriteLine( e.Message );
                     MessageBox.Show( "Une erreur lors du chargement des images est survenu" );
                 }
             } );
         }
 
-        private void Pict_Click(object sender, EventArgs e ) {
+        private void update_view() {
+            this.updateTagsView( );
+            this.updateSelectedTag( );
+            this.InitializeImage( );
+        }
+
+        private void Pict_Click( object sender, EventArgs e ) {
             PictureBox image = sender as PictureBox;
             if ( image != null ) {
                 this.imageClicked = image.ImageLocation;
@@ -62,25 +64,65 @@ namespace Projet.Net {
         }
 
         private void tagSearch_TextChanged( object sender, EventArgs e ) {
-            if ( tagSearch.Text.Trim( ) != "" ) {
-                filtrerTags( tagSearch.Text );
-            } else {
-                updateTagsView( Base.getInstance( ).getNextTags( ) );
+            if ( Base.getInstance( ).getNextTags( ).Count != 0 ) {
+                if ( tagSearch.Text.Trim( ) != "" ) {
+                    filtrerTags( tagSearch.Text );
+                } else {
+                    updateTagsView( );
+                }
             }
         }
 
         private void tags_SelectedIndexChanged( object sender, EventArgs e ) {
+            if ( Base.getInstance( ).getNextTags( ).Count != 0 && tags.SelectedItem != null ) {
+                Base.getInstance( ).selectTag( new Tag(tags.SelectedItem.ToString()) );
+                this.update_view( );
+            }
+        }
 
+        private void updateSelectedTag() {
+            this.listTagSelected.Controls.Clear( );
+            List<Tag> tags = Base.getInstance( ).getSelectedTags( );
+            tags.ForEach( ( tag ) => {
+                Label textTag = new Label( );
+                textTag.Text = tag.getName( ) + " ✖";
+                textTag.Click += new System.EventHandler( (object sender, EventArgs e) => {
+                    Label label = sender as Label;
+                    Base.getInstance( ).deselectTag( new Tag(label.Text.Substring( 0, label.Text.Length - 2)));
+                    this.update_view( );
+                } );
+                this.listTagSelected.Controls.Add( textTag );
+            } );
         }
 
         /**
          * Fonctions utiles
          */
-        private void updateTagsView( List<Tag> tagsItems ) {
+        private void updateTagsView() {
+            List<Tag> tagsItems = Base.getInstance( ).getNextTags( );
+            tags.BeginUpdate( );
             tags.Items.Clear( );
-            foreach ( Tag tag in tagsItems ) {
-                tags.Items.Add( tag.getName( ).Trim( ) );
+            if ( tagsItems.Count( ) == 0 ) {
+                tags.Items.Add( "Aucun tag trouvé" );
+            } else {
+                foreach ( Tag tag in tagsItems ) {
+                    tags.Items.Add( tag.getName( ).Trim( ) );
+                }
             }
+            tags.EndUpdate( );
+        }
+
+        private void updateTagsView( List<Tag> tagsItems ) {
+            tags.BeginUpdate( );
+            tags.Items.Clear( );
+            if ( tagsItems.Count( ) == 0 ) {
+                tags.Items.Add( "Aucun tag trouvé" );
+            } else {
+                foreach ( Tag tag in tagsItems ) {
+                    tags.Items.Add( tag.getName( ).Trim( ) );
+                }
+            }
+            tags.EndUpdate( );
         }
 
         private void filtrerTags( string expression ) {

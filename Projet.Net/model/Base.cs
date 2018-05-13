@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Projet.Net.model {
     class Base {
 
-        public static String workspacePath = "C:\\Users\\danie\\ImageProjetWorkspace\\";
+        public static String workspacePath;
 
         private static Base instance = new Base( );
 
@@ -38,7 +38,10 @@ namespace Projet.Net.model {
                     return;
                 }
             }
-            this.tags.Add( new Tag( name ) );
+            Tag tmpTag = new Tag( name );
+            if ( !tagExists( tmpTag ) ) {
+                this.tags.Add( new Tag( name ) );
+            }
         }
 
         public void replaceAnRemoveTag( Tag tag, Tag newTag ) {
@@ -55,7 +58,7 @@ namespace Projet.Net.model {
         }
 
         public void deselectTag( Tag tag ) {
-            this.selectedTags.Remove( tag );
+            this.selectedTags = tag.removeFrom( this.selectedTags );
         }
 
         public List<Tag> getSelectedTags() {
@@ -67,14 +70,10 @@ namespace Projet.Net.model {
 
             foreach ( Image image in this.imagesWithTags( ) ) {
                 foreach ( Tag tag in image.getTags( ) ) {
-                    if ( !tag.inList( nextTags ) ) {
+                    if ( !tag.inList( nextTags ) && !tag.inList( this.selectedTags ) ) {
                         nextTags.Add( tag );
                     }
                 }
-            }
-
-            foreach ( Tag tag in this.selectedTags ) {
-                nextTags.Remove( tag );
             }
 
             return nextTags;
@@ -116,7 +115,9 @@ namespace Projet.Net.model {
                     this.copieImageToWorkspace( imageFullFilePath, imageName );
                 }
                 Image image = this.createImage( imageName );
-                //image.tag( readTag( nouvellesImages ) ); TODO
+                //Tag readsTags = readTag( nouvellesImages )
+                //image.tag( readsTags ); TODO
+                //this.addTag(readsTag);
             }
             this.saveImagesToWorkSpace( );
         }
@@ -207,7 +208,7 @@ namespace Projet.Net.model {
 
             foreach ( Image image in this.images ) {
                 tempJson += "{ 'path' : '" + image.getPath( ) + "'," +
-                              "'tag' : []},";
+                              "'tags' : [" + String.Join( ",", image.getTags( ).ConvertAll<String>( tag => "\"" + tag.getName( ) + "\"" ) ) + "]},";
             }
             tempJson = tempJson.Substring( 0, tempJson.Length - 1 );
 

@@ -52,6 +52,7 @@ namespace Projet.Net
             this.importerImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuClickDroit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ouvrirDansLexplorateurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listTagSelected = new System.Windows.Forms.FlowLayoutPanel();
             this.menuBar.SuspendLayout();
             this.flowLayoutGauche.SuspendLayout();
             this.flowLayoutSearchTags.SuspendLayout();
@@ -130,9 +131,9 @@ namespace Projet.Net
             // flowLayoutLeft
             // 
             this.flowLayoutLeft.Dock = System.Windows.Forms.DockStyle.Right;
-            this.flowLayoutLeft.Location = new System.Drawing.Point(715, 25);
+            this.flowLayoutLeft.Location = new System.Drawing.Point(767, 25);
             this.flowLayoutLeft.Name = "flowLayoutLeft";
-            this.flowLayoutLeft.Size = new System.Drawing.Size(160, 433);
+            this.flowLayoutLeft.Size = new System.Drawing.Size(108, 433);
             this.flowLayoutLeft.TabIndex = 7;
             this.flowLayoutLeft.WrapContents = false;
             // 
@@ -185,10 +186,10 @@ namespace Projet.Net
             // 
             // MosaiqueImages
             // 
-            this.MosaiqueImages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MosaiqueImages.Location = new System.Drawing.Point(200, 25);
+            this.MosaiqueImages.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.MosaiqueImages.Location = new System.Drawing.Point(200, 85);
             this.MosaiqueImages.Name = "MosaiqueImages";
-            this.MosaiqueImages.Size = new System.Drawing.Size(515, 433);
+            this.MosaiqueImages.Size = new System.Drawing.Size(569, 373);
             this.MosaiqueImages.TabIndex = 6;
             // 
             // importerImageDialog
@@ -212,12 +213,20 @@ namespace Projet.Net
             this.ouvrirDansLexplorateurToolStripMenuItem.Text = "Ouvrir dans votre visualisateur d\'image";
             this.ouvrirDansLexplorateurToolStripMenuItem.Click += new System.EventHandler(this.ouvrirDansLexplorateurToolStripMenuItem_Click);
             // 
+            // listTagSelected
+            // 
+            this.listTagSelected.Location = new System.Drawing.Point(200, 25);
+            this.listTagSelected.Name = "listTagSelected";
+            this.listTagSelected.Size = new System.Drawing.Size(569, 54);
+            this.listTagSelected.TabIndex = 8;
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(875, 458);
+            this.Controls.Add(this.listTagSelected);
             this.Controls.Add(this.MosaiqueImages);
             this.Controls.Add(this.flowLayoutGauche);
             this.Controls.Add(this.flowLayoutLeft);
@@ -256,6 +265,7 @@ namespace Projet.Net
         private ToolStripMenuItem ouvrirDansLexplorateurToolStripMenuItem;
         private ToolStripMenuItem ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
+        private FlowLayoutPanel listTagSelected;
     }
 }
 
