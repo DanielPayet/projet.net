@@ -29,14 +29,19 @@ namespace Projet.Net {
             this.MosaiqueImages.Controls.Clear( );
             List<model.Image> images = Base.getInstance( ).imagesWithTags( );
             images.ForEach( ( image ) => {
-                PictureBox pict = new PictureBox( );
-                pict.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath( ) );
-                pict.ImageLocation = Base.workspacePath + image.getPath( );
-                pict.SizeMode = PictureBoxSizeMode.Zoom;
-                pict.Width = 150;
-                pict.Height = 150;
-                pict.Click += Pict_Click;
-                this.MosaiqueImages.Controls.Add( pict );
+                try {
+                    PictureBox pict = new PictureBox( );
+                    pict.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath( ) );
+                    pict.ImageLocation = Base.workspacePath + image.getPath( );
+                    pict.SizeMode = PictureBoxSizeMode.Zoom;
+                    pict.Width = 150;
+                    pict.Height = 150;
+                    pict.Click += Pict_Click;
+                    this.MosaiqueImages.Controls.Add( pict );
+                } catch (Exception e ) {
+                    Console.Error.WriteLine( e.Message );
+                    MessageBox.Show( "Une erreur lors du chargement des images est survenu" );
+                }
             } );
         }
 

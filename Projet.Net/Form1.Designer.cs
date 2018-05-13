@@ -36,8 +36,10 @@ namespace Projet.Net
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.menuBar = new System.Windows.Forms.ToolStrip();
             this.EditionDropDown = new System.Windows.Forms.ToolStripDropDownButton();
-            this.ouvrirUnWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importerDesImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ouvrirUnWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.leftApp = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutLeft = new System.Windows.Forms.FlowLayoutPanel();
@@ -50,8 +52,6 @@ namespace Projet.Net
             this.importerImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuClickDroit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ouvrirDansLexplorateurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuBar.SuspendLayout();
             this.flowLayoutGauche.SuspendLayout();
             this.flowLayoutSearchTags.SuspendLayout();
@@ -85,13 +85,6 @@ namespace Projet.Net
             this.EditionDropDown.Text = "Edition";
             this.EditionDropDown.ToolTipText = "Edition";
             // 
-            // ouvrirUnWorkspaceToolStripMenuItem
-            // 
-            this.ouvrirUnWorkspaceToolStripMenuItem.Name = "ouvrirUnWorkspaceToolStripMenuItem";
-            this.ouvrirUnWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
-            this.ouvrirUnWorkspaceToolStripMenuItem.Text = "Ouvrir un dossier de travail";
-            this.ouvrirUnWorkspaceToolStripMenuItem.ToolTipText = "Ouvrir un nouveau dossier de travail";
-            // 
             // importerDesImagesToolStripMenuItem
             // 
             this.importerDesImagesToolStripMenuItem.Name = "importerDesImagesToolStripMenuItem";
@@ -99,6 +92,25 @@ namespace Projet.Net
             this.importerDesImagesToolStripMenuItem.Text = "Importer des images";
             this.importerDesImagesToolStripMenuItem.ToolTipText = "Importer des images dans le dossier actuel";
             this.importerDesImagesToolStripMenuItem.Click += new System.EventHandler(this.importerDesImagesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(355, 6);
+            // 
+            // ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem
+            // 
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Name = "ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem";
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Text = "Ouvrir le dossier de travail dans l\'explorateur Windows";
+            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Click += new System.EventHandler(this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem_Click);
+            // 
+            // ouvrirUnWorkspaceToolStripMenuItem
+            // 
+            this.ouvrirUnWorkspaceToolStripMenuItem.Name = "ouvrirUnWorkspaceToolStripMenuItem";
+            this.ouvrirUnWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
+            this.ouvrirUnWorkspaceToolStripMenuItem.Text = "Ouvrir un dossier de travail";
+            this.ouvrirUnWorkspaceToolStripMenuItem.ToolTipText = "Ouvrir un nouveau dossier de travail";
             // 
             // toolStripSeparator
             // 
@@ -199,18 +211,6 @@ namespace Projet.Net
             this.ouvrirDansLexplorateurToolStripMenuItem.Size = new System.Drawing.Size(279, 22);
             this.ouvrirDansLexplorateurToolStripMenuItem.Text = "Ouvrir dans votre visualisateur d\'image";
             this.ouvrirDansLexplorateurToolStripMenuItem.Click += new System.EventHandler(this.ouvrirDansLexplorateurToolStripMenuItem_Click);
-            // 
-            // ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem
-            // 
-            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Name = "ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem";
-            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
-            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Text = "Ouvrir le dossier de travail dans l\'explorateur Windows";
-            this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem.Click += new System.EventHandler(this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(355, 6);
             // 
             // AppWindow
             // 
