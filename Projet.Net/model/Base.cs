@@ -32,6 +32,10 @@ namespace Projet.Net.model {
             return false;
         }
 
+        public List<Tag> getGlobalTags() {
+            return this.tags;
+        }
+
         public void addTag( String name ) {
             foreach ( Tag tag in this.tags ) {
                 if ( tag.getName( ) == name ) {
