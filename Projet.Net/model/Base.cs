@@ -57,7 +57,7 @@ namespace Projet.Net.model {
                 }
             }
             Tag tmpTag = new Tag( name );
-            this.localTags.Add( new Tag( name ) );
+            this.localTags.Add( tmpTag );
         }
 
         // Get the local tags from the List
@@ -263,8 +263,8 @@ namespace Projet.Net.model {
         }
 
         public void updateWorkspace() {
-
-            string tags = "[" + String.Join( ",", this.tags.ConvertAll<String>( tag => "\"" + tag.getName( ) + "\"" ) ) + "]";
+            
+            string tags = "[" + String.Join( ",", this.localTags.ConvertAll<String>( tag => "\"" + tag.getName( ) + "\"" ) ) + "]";
 
             string tempJson = "[";
 

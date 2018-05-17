@@ -31,7 +31,6 @@
             this.listBoxLocalTags = new System.Windows.Forms.ListBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.addLocalTag = new System.Windows.Forms.Button();
-            this.deleteLocalTag = new System.Windows.Forms.Button();
             this.textBoxNewLocalTag = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -48,9 +47,8 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.addLocalTag);
-            this.flowLayoutPanel1.Controls.Add(this.deleteLocalTag);
             this.flowLayoutPanel1.Controls.Add(this.textBoxNewLocalTag);
+            this.flowLayoutPanel1.Controls.Add(this.addLocalTag);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(136, 0);
@@ -60,7 +58,7 @@
             // 
             // addLocalTag
             // 
-            this.addLocalTag.Location = new System.Drawing.Point(3, 3);
+            this.addLocalTag.Location = new System.Drawing.Point(3, 42);
             this.addLocalTag.Name = "addLocalTag";
             this.addLocalTag.Size = new System.Drawing.Size(40, 40);
             this.addLocalTag.TabIndex = 0;
@@ -68,20 +66,9 @@
             this.addLocalTag.UseVisualStyleBackColor = true;
             this.addLocalTag.Click += new System.EventHandler(this.addLocalTag_Click);
             // 
-            // deleteLocalTag
-            // 
-            this.deleteLocalTag.Dock = System.Windows.Forms.DockStyle.Top;
-            this.deleteLocalTag.Location = new System.Drawing.Point(49, 3);
-            this.deleteLocalTag.Name = "deleteLocalTag";
-            this.deleteLocalTag.Size = new System.Drawing.Size(40, 40);
-            this.deleteLocalTag.TabIndex = 0;
-            this.deleteLocalTag.Text = "-";
-            this.deleteLocalTag.UseVisualStyleBackColor = true;
-            this.deleteLocalTag.Click += new System.EventHandler(this.deleteLocalTag_Click);
-            // 
             // textBoxNewLocalTag
             // 
-            this.textBoxNewLocalTag.Location = new System.Drawing.Point(3, 49);
+            this.textBoxNewLocalTag.Location = new System.Drawing.Point(3, 3);
             this.textBoxNewLocalTag.Multiline = true;
             this.textBoxNewLocalTag.Name = "textBoxNewLocalTag";
             this.textBoxNewLocalTag.Size = new System.Drawing.Size(85, 33);
@@ -112,7 +99,6 @@
 		private System.Windows.Forms.ListBox listBoxLocalTags;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.Button addLocalTag;
-		private System.Windows.Forms.Button deleteLocalTag;
 		private System.Windows.Forms.TextBox textBoxNewLocalTag;
 	}
 }

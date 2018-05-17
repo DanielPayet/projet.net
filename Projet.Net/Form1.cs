@@ -41,16 +41,18 @@ namespace Projet.Net {
             } );
         }
 
-        private void update_view() {
+        public void render() {
             this.updateTagsView( );
             this.updateSelectedTag( );
             this.InitializeImage( );
-            this.updateTagsImage( );
+            if ( this.imageClicked != null ) {
+                this.updateTagsImage( );
+            }
         }
 
-        public void mettreAJourImage(List<Tag> tags) {
+        public void mettreAJourImage( List<Tag> tags ) {
             Base.getInstance( ).getImages( ).Find( ( image ) => image.getId( ) == this.imageClicked.getId( ) ).tag( tags );
-            this.update_view( );
+            this.render( );
             Base.getInstance( ).updateWorkspace( );
         }
 
@@ -69,7 +71,7 @@ namespace Projet.Net {
             if ( imageSender != null ) {
                 this.imageClicked = image;
                 if ( mouseEvent.Button == MouseButtons.Left ) {
-                    this.pictureRightView.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath() );
+                    this.pictureRightView.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath( ) );
                     this.pictureRightView.ImageLocation = Base.workspacePath + image.getPath( );
                     this.pictureRightView.SizeMode = PictureBoxSizeMode.Zoom;
                     updateTagsImage( );
@@ -102,7 +104,7 @@ namespace Projet.Net {
         private void tags_SelectedIndexChanged( object sender, EventArgs e ) {
             if ( Base.getInstance( ).getNextTags( ).Count != 0 && tags.SelectedItem != null ) {
                 Base.getInstance( ).selectTag( new Tag( tags.SelectedItem.ToString( ) ) );
-                this.update_view( );
+                this.render( );
             }
         }
 
@@ -115,12 +117,12 @@ namespace Projet.Net {
                 textTag.Click += new System.EventHandler( ( object sender, EventArgs e ) => {
                     Label label = sender as Label;
                     Base.getInstance( ).deselectTag( new Tag( label.Text.Substring( 0, label.Text.Length - 2 ) ) );
-                    this.update_view( );
+                    this.render( );
                 } );
                 this.listTagSelected.Controls.Add( textTag );
             } );
         }
-        
+
         private void updateTagsView() {
             List<Tag> tagsItems = Base.getInstance( ).getNextTags( );
             tags.BeginUpdate( );
@@ -177,10 +179,10 @@ namespace Projet.Net {
 
         // Handles the local tags process
         private void toolStripButtonTags_Click( object sender, EventArgs e ) {
-            new Tags( ).Show( );
+            new Tags( this ).Show( );
         }
         private void ajouterUnTagToolStripMenuItem_Click( object sender, EventArgs e ) {
-            new addTagToPicture( this,  this.imageClicked ).Show( );
+            new addTagToPicture( this, this.imageClicked ).Show( );
         }
     }
 }

@@ -13,8 +13,10 @@ namespace Projet.Net
 {
     public partial class Tags : Form
     {
-        public Tags()
+        private AppWindow main;
+        public Tags(AppWindow main)
         {
+            this.main = main;
             InitializeComponent();
 			updateLocalTagList();
 		}
@@ -38,7 +40,8 @@ namespace Projet.Net
 
 		// Saves the local changes
 		public void saveLocalChanges() {
-			// Save the changes inside the workspace #TODO
+            Base.getInstance( ).updateWorkspace( );
+            this.main.render( );
 		}
 
 		// Update the visual of the local list in Tags.cs
