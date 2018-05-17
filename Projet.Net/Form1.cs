@@ -168,6 +168,14 @@ namespace Projet.Net {
             Process.Start( Base.workspacePath );
         }
 
+        // Handles the local tags process
+        private void toolStripButtonTags_Click( object sender, EventArgs e ) {
+            new Tags( ).Show( );
+        }
+        private void ajouterUnTagToolStripMenuItem_Click( object sender, EventArgs e ) {
+            new addTagToPicture( ).Show( );
+        }
+
         private List<Tag> ShowTagDialog( Image image ) {
             List<Tag> nouvelleListe = new List<Tag>( );
             Form prompt = new Form( );
@@ -215,9 +223,9 @@ namespace Projet.Net {
             legendeTagGlobal.Controls.Add( tagGlobal );
             legendeTagsImage.Controls.Add( tagImageAModifier );
 
-            Base.getInstance( ).getGlobalTags( ).ForEach( tag => tagGlobal.Items.Add( tag.getName() ) );
-            image.getTags( ).ForEach( tag => tagImageAModifier.Items.Add( tag.getName() ) );
-            if(image.getTags().Count() == 0 ) {
+            Base.getInstance( ).getGlobalTags( ).ForEach( tag => tagGlobal.Items.Add( tag.getName( ) ) );
+            image.getTags( ).ForEach( tag => tagImageAModifier.Items.Add( tag.getName( ) ) );
+            if ( image.getTags( ).Count( ) == 0 ) {
                 tagImageAModifier.Enabled = false;
                 tagImageAModifier.Items.Add( "Aucun tag dans cette image" );
             }
@@ -229,7 +237,7 @@ namespace Projet.Net {
         private List<Tag> getNewList( ListBox.ObjectCollection items ) {
             List<Tag> tags = new List<model.Tag>( );
             foreach ( var _iterator in items ) {
-                tags.Add( new model.Tag( _iterator.ToString() ) );
+                tags.Add( new model.Tag( _iterator.ToString( ) ) );
 
             }
             return tags;

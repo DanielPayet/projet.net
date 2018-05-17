@@ -2,10 +2,8 @@
 using Projet.Net.model;
 using System.Drawing;
 
-namespace Projet.Net
-{
-    partial class AppWindow
-    {
+namespace Projet.Net {
+    partial class AppWindow {
         /// <summary>
         /// Variable nécessaire au concepteur.
         /// </summary>
@@ -15,13 +13,11 @@ namespace Projet.Net
         /// Nettoyage des ressources utilisées.
         /// </summary>
         /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
+        protected override void Dispose( bool disposing ) {
+            if ( disposing && ( components != null ) ) {
+                components.Dispose( );
             }
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
 
         #region Code généré par le Concepteur Windows Form
@@ -30,8 +26,7 @@ namespace Projet.Net
         /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
         /// le contenu de cette méthode avec l'éditeur de code.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppWindow));
             this.menuBar = new System.Windows.Forms.ToolStrip();
@@ -40,6 +35,7 @@ namespace Projet.Net
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ouvrirUnWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonTags = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.leftApp = new System.Windows.Forms.ToolStripButton();
             this.tagSearch = new System.Windows.Forms.TextBox();
@@ -49,6 +45,7 @@ namespace Projet.Net
             this.importerImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuClickDroit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ouvrirDansLexplorateurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ajouterUnTagToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listTagSelected = new System.Windows.Forms.FlowLayoutPanel();
             this.CenterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panelDroit = new System.Windows.Forms.TableLayoutPanel();
@@ -58,6 +55,7 @@ namespace Projet.Net
             this.listeTagsImage = new System.Windows.Forms.ListBox();
             this.PanelGauche = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutSearchTags = new System.Windows.Forms.FlowLayoutPanel();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuBar.SuspendLayout();
             this.menuClickDroit.SuspendLayout();
             this.CenterPanel.SuspendLayout();
@@ -72,6 +70,7 @@ namespace Projet.Net
             // 
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.EditionDropDown,
+            this.toolStripButtonTags,
             this.toolStripSeparator,
             this.leftApp});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
@@ -121,6 +120,16 @@ namespace Projet.Net
             this.ouvrirUnWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(358, 22);
             this.ouvrirUnWorkspaceToolStripMenuItem.Text = "Ouvrir un dossier de travail";
             this.ouvrirUnWorkspaceToolStripMenuItem.ToolTipText = "Ouvrir un nouveau dossier de travail";
+            // 
+            // toolStripButtonTags
+            // 
+            this.toolStripButtonTags.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonTags.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTags.Image")));
+            this.toolStripButtonTags.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonTags.Name = "toolStripButtonTags";
+            this.toolStripButtonTags.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButtonTags.Text = "Tags";
+            this.toolStripButtonTags.Click += new System.EventHandler(this.toolStripButtonTags_Click);
             // 
             // toolStripSeparator
             // 
@@ -188,9 +197,10 @@ namespace Projet.Net
             // menuClickDroit
             // 
             this.menuClickDroit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ouvrirDansLexplorateurToolStripMenuItem});
+            this.ouvrirDansLexplorateurToolStripMenuItem,
+            this.ajouterUnTagToolStripMenuItem});
             this.menuClickDroit.Name = "menuClickDroit";
-            this.menuClickDroit.Size = new System.Drawing.Size(280, 26);
+            this.menuClickDroit.Size = new System.Drawing.Size(280, 48);
             // 
             // ouvrirDansLexplorateurToolStripMenuItem
             // 
@@ -198,6 +208,13 @@ namespace Projet.Net
             this.ouvrirDansLexplorateurToolStripMenuItem.Size = new System.Drawing.Size(279, 22);
             this.ouvrirDansLexplorateurToolStripMenuItem.Text = "Ouvrir dans votre visualisateur d\'image";
             this.ouvrirDansLexplorateurToolStripMenuItem.Click += new System.EventHandler(this.ouvrirDansLexplorateurToolStripMenuItem_Click);
+            // 
+            // ajouterUnTagToolStripMenuItem
+            // 
+            this.ajouterUnTagToolStripMenuItem.Name = "ajouterUnTagToolStripMenuItem";
+            this.ajouterUnTagToolStripMenuItem.Size = new System.Drawing.Size(279, 22);
+            this.ajouterUnTagToolStripMenuItem.Text = "Ajouter un tag";
+            this.ajouterUnTagToolStripMenuItem.Click += new System.EventHandler(this.ajouterUnTagToolStripMenuItem_Click);
             // 
             // listTagSelected
             // 
@@ -310,6 +327,11 @@ namespace Projet.Net
             this.flowLayoutSearchTags.Size = new System.Drawing.Size(151, 27);
             this.flowLayoutSearchTags.TabIndex = 0;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // AppWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,6 +345,7 @@ namespace Projet.Net
             this.Controls.Add(this.menuBar);
             this.MinimumSize = new System.Drawing.Size(600, 39);
             this.Name = "AppWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Photo Tagger";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuBar.ResumeLayout(false);
@@ -367,6 +390,9 @@ namespace Projet.Net
         private ListBox listeTagsImage;
         private TableLayoutPanel PanelGauche;
         private FlowLayoutPanel flowLayoutSearchTags;
+        private ToolStripButton toolStripButtonTags;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem ajouterUnTagToolStripMenuItem;
     }
 }
 
