@@ -41,10 +41,26 @@ namespace Projet.Net {
             } );
         }
 
-        public void update_view() {
+        private void update_view() {
             this.updateTagsView( );
             this.updateSelectedTag( );
             this.InitializeImage( );
+            this.updateTagsImage( );
+        }
+
+        public void mettreAJourImage(List<Tag> tags) {
+            Base.getInstance( ).getImages( ).Find( ( image ) => image.getId( ) == this.imageClicked.getId( ) ).tag( tags );
+            this.update_view( );
+            Base.getInstance( ).updateWorkspace( );
+        }
+
+        public void updateTagsImage() {
+            this.listeTagsImage.Items.Clear( );
+            if ( imageClicked.getTags( ).Count( ) == 0 ) {
+                this.listeTagsImage.Items.Add( "Aucun tag sur cette image" );
+            } else {
+                imageClicked.getTags( ).ForEach( ( tag ) => this.listeTagsImage.Items.Add( tag.getName( ) ) );
+            }
         }
 
         private void clickOnPicture( object sender, EventArgs e, Image image ) {
@@ -56,13 +72,7 @@ namespace Projet.Net {
                     this.pictureRightView.Image = System.Drawing.Image.FromFile( Base.workspacePath + image.getPath() );
                     this.pictureRightView.ImageLocation = Base.workspacePath + image.getPath( );
                     this.pictureRightView.SizeMode = PictureBoxSizeMode.Zoom;
-                    this.listeTagsImage.Items.Clear( );
-                    if ( image.getTags( ).Count( ) == 0 ) {
-                        this.listeTagsImage.Items.Add( "Aucun tag sur cette image" );
-                    } else {
-                        image.getTags( ).ForEach( ( tag ) => this.listeTagsImage.Items.Add( tag.getName( ) ) );
-                    }
-
+                    updateTagsImage( );
                     this.addTag.Click += ( object send, EventArgs ev ) => new addTagToPicture( this, image ).Show( );
                     this.panelDroit.Visible = true;
                 } else if ( mouseEvent.Button == MouseButtons.Right ) {
@@ -110,10 +120,7 @@ namespace Projet.Net {
                 this.listTagSelected.Controls.Add( textTag );
             } );
         }
-
-        /**
-         * Fonctions utiles
-         */
+        
         private void updateTagsView() {
             List<Tag> tagsItems = Base.getInstance( ).getNextTags( );
             tags.BeginUpdate( );
@@ -174,15 +181,6 @@ namespace Projet.Net {
         }
         private void ajouterUnTagToolStripMenuItem_Click( object sender, EventArgs e ) {
             new addTagToPicture( this,  this.imageClicked ).Show( );
-        }
-        
-        private List<Tag> getNewList( ListBox.ObjectCollection items ) {
-            List<Tag> tags = new List<model.Tag>( );
-            foreach ( var _iterator in items ) {
-                tags.Add( new model.Tag( _iterator.ToString( ) ) );
-
-            }
-            return tags;
         }
     }
 }

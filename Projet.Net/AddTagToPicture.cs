@@ -23,7 +23,7 @@ namespace Projet.Net {
             if ( listBoxLocalTags.SelectedItem != null ) {
                 Tag tag = new Tag( this.listBoxLocalTags.SelectedItem as string );
                 this.image.tag( tag );
-                this.main.update_view( );
+                this.main.mettreAJourImage( this.image.getTags( ) );
                 this.Close( );
             }
         }

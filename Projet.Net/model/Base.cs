@@ -12,7 +12,7 @@ namespace Projet.Net.model {
 
         private List<Image> images = new List<Image>( );
         private List<Tag> tags = new List<Tag>( );
-        private List<Tag> localTags = new List<Tag>();
+        private List<Tag> localTags = new List<Tag>( );
 
         private List<Tag> selectedTags = new List<Tag>( );
 
@@ -49,28 +49,28 @@ namespace Projet.Net.model {
             }
         }
 
-		// Adds local tag
-		public void addLocalTag(String name) {
-			foreach (Tag localTags in this.localTags) {
-				if (localTags.getName() == name) {
-					return;
-				}
-			}
-			Tag tmpTag = new Tag(name);
-			this.localTags.Add(new Tag(name));
-		}
+        // Adds local tag
+        public void addLocalTag( String name ) {
+            foreach ( Tag localTags in this.localTags ) {
+                if ( localTags.getName( ) == name ) {
+                    return;
+                }
+            }
+            Tag tmpTag = new Tag( name );
+            this.localTags.Add( new Tag( name ) );
+        }
 
-		// Get the local tags from the List
-		public List<Tag> getLocalTags() {
-			return this.localTags;
-		}
+        // Get the local tags from the List
+        public List<Tag> getLocalTags() {
+            return this.localTags;
+        }
 
-		// Remove the given tag from the localList
-		public void removeLocalTag(String localTagToRemove) {
-			this.localTags.Remove(new Tag(localTagToRemove));
-		}
+        // Remove the given tag from the localList
+        public void removeLocalTag( String localTagToRemove ) {
+            this.localTags.Remove( new Tag( localTagToRemove ) );
+        }
 
-		public void replaceAnRemoveTag( Tag tag, Tag newTag ) {
+        public void replaceAnRemoveTag( Tag tag, Tag newTag ) {
             foreach ( Image image in this.images ) {
                 image.replaceTag( tag, newTag );
             }
@@ -121,6 +121,10 @@ namespace Projet.Net.model {
             }
         }
 
+        public List<Image> getImages() {
+            return this.images;
+        }
+
         private Image createImage( String path ) {
             foreach ( Image image in this.images ) {
                 if ( image.getPath( ) == path ) {
@@ -136,14 +140,16 @@ namespace Projet.Net.model {
 
         public void importImage( string[] imagesFullFilePath ) {
             foreach ( string imageFullFilePath in imagesFullFilePath ) {
-                string imageName = this.generateImageName( imageFullFilePath );
-                if ( !workspacePath.Equals( Path.GetDirectoryName( imageFullFilePath ) + Path.DirectorySeparatorChar ) ) {
-                    this.copieImageToWorkspace( imageFullFilePath, imageName );
+                if ( Path.GetFileNameWithoutExtension( imageFullFilePath ) != "" ) {
+                    string imageName = this.generateImageName( imageFullFilePath );
+                    if ( !workspacePath.Equals( Path.GetDirectoryName( imageFullFilePath ) + Path.DirectorySeparatorChar ) ) {
+                        this.copieImageToWorkspace( imageFullFilePath, imageName );
+                    }
+                    Image image = this.createImage( imageName );
+                    //Tag readsTags = readTag( nouvellesImages )
+                    //image.tag( readsTags ); TODO
+                    //this.addTag(readsTag);
                 }
-                Image image = this.createImage( imageName );
-                //Tag readsTags = readTag( nouvellesImages )
-                //image.tag( readsTags ); TODO
-                //this.addTag(readsTag);
             }
             this.saveImagesToWorkSpace( );
         }
@@ -187,7 +193,7 @@ namespace Projet.Net.model {
                 if ( json.tags != null ) {
                     foreach ( String tagName in json.tags ) {
                         //this.addTag( tagName ); In case, I'm going to add the local tags to the localTag List
-                        this.addLocalTag(tagName); // Adding to local tag list
+                        this.addLocalTag( tagName ); // Adding to local tag list
                     }
                 }
 
@@ -244,6 +250,35 @@ namespace Projet.Net.model {
 
             string contents = File.ReadAllText( Base.workspacePath + "workspace.json" );
             dynamic json = JsonConvert.DeserializeObject( contents );
+            json.images = JsonConvert.DeserializeObject( tempJson );
+            TextWriter writer = null;
+            try {
+                dynamic contentsToWriteToFile = JsonConvert.SerializeObject( json, Formatting.Indented );
+                writer = new StreamWriter( workspacePath + "workspace.json", false );
+                writer.Write( contentsToWriteToFile );
+            } finally {
+                if ( writer != null )
+                    writer.Close( );
+            }
+        }
+
+        public void updateWorkspace() {
+
+            string tags = "[" + String.Join( ",", this.tags.ConvertAll<String>( tag => "\"" + tag.getName( ) + "\"" ) ) + "]";
+
+            string tempJson = "[";
+
+            foreach ( Image image in this.images ) {
+                tempJson += "{ 'path' : '" + image.getPath( ) + "'," +
+                              "'tags' : [" + String.Join( ",", image.getTags( ).ConvertAll<String>( tag => "\"" + tag.getName( ) + "\"" ) ) + "]},";
+            }
+            tempJson = tempJson.Substring( 0, tempJson.Length - 1 );
+
+            tempJson += "]";
+
+            string contents = File.ReadAllText( Base.workspacePath + "workspace.json" );
+            dynamic json = JsonConvert.DeserializeObject( contents );
+            json.tags = JsonConvert.DeserializeObject( tags );
             json.images = JsonConvert.DeserializeObject( tempJson );
             TextWriter writer = null;
             try {
