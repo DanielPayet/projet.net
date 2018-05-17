@@ -56,7 +56,11 @@ namespace Projet.Net {
         }
 
         private void leftAppButton_Click( object sender, EventArgs e ) {
-            Application.Exit( );
+            //Application.Exit( ); TO UNCOMMENT
+            foreach (Tag tag in Base.getInstance().getLocalTags())
+            {
+                Console.WriteLine("LeftButton : " + tag.getName());
+            }
         }
 
         private void eraseTagSearch_Click( object sender, EventArgs e ) {
@@ -144,12 +148,21 @@ namespace Projet.Net {
             }
         }
 
-        private void ouvrirDansLexplorateurToolStripMenuItem_Click( object sender, EventArgs e ) {
-            Process.Start( this.imageClicked );
-        }
+		private void ouvrirDansLexplorateurToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start(this.imageClicked);
+		}
 
-        private void ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem_Click( object sender, EventArgs e ) {
-            Process.Start( Base.workspacePath );
-        }
-    }
+		private void ouvrirLeDossierDeTravailDansLexplorateurWindowsToolStripMenuItem_Click(object sender, EventArgs e) {
+			Process.Start(Base.workspacePath);
+		}
+
+		// Handles the local tags process
+		private void toolStripButtonTags_Click(object sender, EventArgs e) {
+			new Tags().Show();
+		}
+
+		private void ajouterUnTagToolStripMenuItem_Click(object sender, EventArgs e) {
+			new addTagToPicture().Show();
+		}
+	}
 }

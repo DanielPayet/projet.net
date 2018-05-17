@@ -12,6 +12,7 @@ namespace Projet.Net.model {
 
         private List<Image> images = new List<Image>( );
         private List<Tag> tags = new List<Tag>( );
+        private List<Tag> localTags = new List<Tag>();
 
         private List<Tag> selectedTags = new List<Tag>( );
 
@@ -44,7 +45,28 @@ namespace Projet.Net.model {
             }
         }
 
-        public void replaceAnRemoveTag( Tag tag, Tag newTag ) {
+		// Adds local tag
+		public void addLocalTag(String name) {
+			foreach (Tag localTags in this.localTags) {
+				if (localTags.getName() == name) {
+					return;
+				}
+			}
+			Tag tmpTag = new Tag(name);
+			this.localTags.Add(new Tag(name));
+		}
+
+		// Get the local tags from the List
+		public List<Tag> getLocalTags() {
+			return this.localTags;
+		}
+
+		// Remove the given tag from the localList
+		public void removeLocalTag(String localTagToRemove) {
+			this.localTags.Remove(new Tag(localTagToRemove));
+		}
+
+		public void replaceAnRemoveTag( Tag tag, Tag newTag ) {
             foreach ( Image image in this.images ) {
                 image.replaceTag( tag, newTag );
             }
@@ -151,6 +173,7 @@ namespace Projet.Net.model {
             }
         }
 
+        // It loads the workspace by reading the json file and adding the tags contained int it
         public void loadWorkspace() {
             this.initWorkspaceDir( );
             try {
@@ -159,7 +182,8 @@ namespace Projet.Net.model {
 
                 if ( json.tags != null ) {
                     foreach ( String tagName in json.tags ) {
-                        this.addTag( tagName );
+                        //this.addTag( tagName ); In case, I'm going to add the local tags to the localTag List
+                        this.addLocalTag(tagName); // Adding to local tag list
                     }
                 }
 
