@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Projet.Net.model {
-    class Tag {
+    public class Tag {
 
         private String name;
 
@@ -31,7 +31,7 @@ namespace Projet.Net.model {
 
         public bool inList( List<Tag> tags ) {
             foreach ( Tag tag in tags ) {
-                if ( this.equalTo( tag ) ) {
+                if ( this.name == tag.getName() ) {
                     return true;
                 }
             }

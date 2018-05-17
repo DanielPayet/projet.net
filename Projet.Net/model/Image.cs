@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ImageFile = System.Drawing.Image;
 
 namespace Projet.Net.model {
-    class Image {
+    public class Image {
         private int id;
         private String path;
 
